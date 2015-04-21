@@ -51,3 +51,25 @@ func Printf(format string, v ...interface{}) {
 func Println(v ...interface{}) {
 	log.Println(getFileLinePrefix(), fmt.Sprint(v...))
 }
+
+var verboseLevel = 1
+
+func GetVerboseLevel() int {
+	return verboseLevel
+}
+
+func SetVerboseLevel(level int) {
+	verboseLevel = level
+}
+
+func Vlog(level int, v ...interface{}) {
+	if level <= verboseLevel {
+		Print(v...)
+	}
+}
+
+func Vlogf(level int, format string, v ...interface{}) {
+	if level <= verboseLevel {
+		Printf(format, v...)
+	}
+}
