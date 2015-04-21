@@ -64,12 +64,12 @@ func SetVerboseLevel(level int) {
 
 func Vlog(level int, v ...interface{}) {
 	if level <= verboseLevel {
-		Print(v...)
+		log.Print(getFileLinePrefix(), fmt.Sprint(v...))
 	}
 }
 
 func Vlogf(level int, format string, v ...interface{}) {
 	if level <= verboseLevel {
-		Printf(format, v...)
+		log.Printf(getFileLinePrefix(), fmt.Sprintf(format, v...))
 	}
 }
