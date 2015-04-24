@@ -70,6 +70,6 @@ func Vlog(level int, v ...interface{}) {
 
 func Vlogf(level int, format string, v ...interface{}) {
 	if level <= verboseLevel {
-		log.Printf(getFileLinePrefix(), fmt.Sprintf(format, v...))
+		log.Print(getFileLinePrefix(), fmt.Sprintf(format, v...))
 	}
 }
