@@ -3,11 +3,14 @@
 package logging
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"path"
 	"runtime"
 )
+
+var vFlag = flag.Int("v", 1, "")
 
 func getFileLinePrefix() string {
 	if _, file, line, ok := runtime.Caller(2); ok {
@@ -52,24 +55,22 @@ func Println(v ...interface{}) {
 	log.Println(getFileLinePrefix(), fmt.Sprint(v...))
 }
 
-var verboseLevel = 1
-
 func GetVerboseLevel() int {
-	return verboseLevel
+	return *vFlag
 }
 
 func SetVerboseLevel(level int) {
-	verboseLevel = level
+	*vFlag = level
 }
 
 func Vlog(level int, v ...interface{}) {
-	if level <= verboseLevel {
+	if level <= *vFlag {
 		log.Print(getFileLinePrefix(), fmt.Sprint(v...))
 	}
 }
 
 func Vlogf(level int, format string, v ...interface{}) {
-	if level <= verboseLevel {
+	if level <= *vFlag {
 		log.Print(getFileLinePrefix(), fmt.Sprintf(format, v...))
 	}
 }
