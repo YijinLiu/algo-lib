@@ -63,14 +63,30 @@ func SetVerboseLevel(level int) {
 	*vFlag = level
 }
 
+func getVlogPrefix(level int) string {
+	if level < 0 {
+		return "\033[0;31m"
+	} else if level == 0 {
+		return "\033[0;33m"
+	}
+	return ""
+}
+
+func getVlogSuffix(level int) string {
+	if level <= 0 {
+		return "\033[0m"
+	}
+	return ""
+}
+
 func Vlog(level int, v ...interface{}) {
 	if level <= *vFlag {
-		log.Print(getFileLinePrefix(), fmt.Sprint(v...))
+		log.Print(getFileLinePrefix(), getVlogPrefix(level), fmt.Sprint(v...), getVlogSuffix(level))
 	}
 }
 
 func Vlogf(level int, format string, v ...interface{}) {
 	if level <= *vFlag {
-		log.Print(getFileLinePrefix(), fmt.Sprintf(format, v...))
+		log.Print(getFileLinePrefix(), getVlogPrefix(level), fmt.Sprintf(format, v...), getVlogSuffix(level))
 	}
 }
